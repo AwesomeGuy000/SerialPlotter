@@ -52,6 +52,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.wheelVelPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.clearGraph = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rightMeasured = new System.Windows.Forms.Label();
             this.rightTarget = new System.Windows.Forms.Label();
@@ -62,7 +63,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.driveControls = new System.Windows.Forms.GroupBox();
             this.offButton2 = new System.Windows.Forms.Button();
             this.rightSpeedDisplay = new System.Windows.Forms.Label();
             this.drive500 = new System.Windows.Forms.Button();
@@ -87,11 +88,22 @@
             this.drive600 = new System.Windows.Forms.Button();
             this.brakeButton = new System.Windows.Forms.Button();
             this.targetCoord = new System.Windows.Forms.TabPage();
+            this.targetControls = new System.Windows.Forms.Panel();
+            this.targetCoordLabel = new System.Windows.Forms.Label();
+            this.targetOffButton = new System.Windows.Forms.Button();
             this.resetTarget = new System.Windows.Forms.Button();
+            this.trackBarXTarget = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
+            this.goButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.resetOdoButton = new System.Windows.Forms.Button();
+            this.trackBarYTarget = new System.Windows.Forms.TrackBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.targVelRLabel = new System.Windows.Forms.Label();
+            this.targVelLLabel = new System.Windows.Forms.Label();
+            this.measuredHeading = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.measuredY = new System.Windows.Forms.Label();
             this.targetY = new System.Windows.Forms.Label();
             this.targetX = new System.Windows.Forms.Label();
@@ -100,9 +112,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.resetEncButton = new System.Windows.Forms.Button();
-            this.goButton = new System.Windows.Forms.Button();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.targetCoordPage = new System.Windows.Forms.TabPage();
             this.button51 = new System.Windows.Forms.Button();
             this.button50 = new System.Windows.Forms.Button();
@@ -156,8 +165,6 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.offResetButton = new System.Windows.Forms.Button();
-            this.button52 = new System.Windows.Forms.Button();
-            this.clearGraph = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -165,16 +172,17 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.driveControls.SuspendLayout();
             this.rightDirRadioPanel.SuspendLayout();
             this.leftDirRadioPanel.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLeft)).BeginInit();
             this.targetCoord.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.targetControls.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarXTarget)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarYTarget)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.targetCoordPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
             this.SuspendLayout();
@@ -335,7 +343,7 @@
             // wheelVelPage
             // 
             this.wheelVelPage.Controls.Add(this.groupBox2);
-            this.wheelVelPage.Controls.Add(this.groupBox1);
+            this.wheelVelPage.Controls.Add(this.driveControls);
             this.wheelVelPage.Location = new System.Drawing.Point(4, 22);
             this.wheelVelPage.Name = "wheelVelPage";
             this.wheelVelPage.Padding = new System.Windows.Forms.Padding(3);
@@ -355,6 +363,16 @@
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Data Received";
+            // 
+            // clearGraph
+            // 
+            this.clearGraph.Location = new System.Drawing.Point(2, 167);
+            this.clearGraph.Name = "clearGraph";
+            this.clearGraph.Size = new System.Drawing.Size(43, 23);
+            this.clearGraph.TabIndex = 5;
+            this.clearGraph.Text = "CLR";
+            this.clearGraph.UseVisualStyleBackColor = true;
+            this.clearGraph.Click += new System.EventHandler(this.clearGraph_Click);
             // 
             // groupBox3
             // 
@@ -454,7 +472,7 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.Maximum = 500D;
+            chartArea1.AxisX.Maximum = 250D;
             chartArea1.AxisX.ScaleBreakStyle.CollapsibleSpaceThreshold = 90;
             chartArea1.AxisX.ScaleBreakStyle.Enabled = true;
             chartArea1.AxisY.Maximum = 400D;
@@ -488,30 +506,30 @@
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             // 
-            // groupBox1
+            // driveControls
             // 
-            this.groupBox1.Controls.Add(this.offButton2);
-            this.groupBox1.Controls.Add(this.rightSpeedDisplay);
-            this.groupBox1.Controls.Add(this.drive500);
-            this.groupBox1.Controls.Add(this.leftSpeedDisplay);
-            this.groupBox1.Controls.Add(this.drive400);
-            this.groupBox1.Controls.Add(this.rightDirRadioPanel);
-            this.groupBox1.Controls.Add(this.drive300);
-            this.groupBox1.Controls.Add(this.leftDirRadioPanel);
-            this.groupBox1.Controls.Add(this.drive100);
-            this.groupBox1.Controls.Add(this.panel3);
-            this.groupBox1.Controls.Add(this.drive50);
-            this.groupBox1.Controls.Add(this.trackBarRight);
-            this.groupBox1.Controls.Add(this.drive200);
-            this.groupBox1.Controls.Add(this.trackBarLeft);
-            this.groupBox1.Controls.Add(this.drive600);
-            this.groupBox1.Controls.Add(this.brakeButton);
-            this.groupBox1.Location = new System.Drawing.Point(4, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(688, 129);
-            this.groupBox1.TabIndex = 34;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Preset Drive";
+            this.driveControls.Controls.Add(this.offButton2);
+            this.driveControls.Controls.Add(this.rightSpeedDisplay);
+            this.driveControls.Controls.Add(this.drive500);
+            this.driveControls.Controls.Add(this.leftSpeedDisplay);
+            this.driveControls.Controls.Add(this.drive400);
+            this.driveControls.Controls.Add(this.rightDirRadioPanel);
+            this.driveControls.Controls.Add(this.drive300);
+            this.driveControls.Controls.Add(this.leftDirRadioPanel);
+            this.driveControls.Controls.Add(this.drive100);
+            this.driveControls.Controls.Add(this.panel3);
+            this.driveControls.Controls.Add(this.drive50);
+            this.driveControls.Controls.Add(this.trackBarRight);
+            this.driveControls.Controls.Add(this.drive200);
+            this.driveControls.Controls.Add(this.trackBarLeft);
+            this.driveControls.Controls.Add(this.drive600);
+            this.driveControls.Controls.Add(this.brakeButton);
+            this.driveControls.Location = new System.Drawing.Point(4, 6);
+            this.driveControls.Name = "driveControls";
+            this.driveControls.Size = new System.Drawing.Size(688, 129);
+            this.driveControls.TabIndex = 34;
+            this.driveControls.TabStop = false;
+            this.driveControls.Text = "Preset Drive";
             // 
             // offButton2
             // 
@@ -767,15 +785,7 @@
             // 
             // targetCoord
             // 
-            this.targetCoord.Controls.Add(this.button52);
-            this.targetCoord.Controls.Add(this.resetTarget);
-            this.targetCoord.Controls.Add(this.label6);
-            this.targetCoord.Controls.Add(this.label5);
-            this.targetCoord.Controls.Add(this.trackBar1);
-            this.targetCoord.Controls.Add(this.groupBox4);
-            this.targetCoord.Controls.Add(this.resetEncButton);
-            this.targetCoord.Controls.Add(this.goButton);
-            this.targetCoord.Controls.Add(this.trackBar2);
+            this.targetCoord.Controls.Add(this.targetControls);
             this.targetCoord.Location = new System.Drawing.Point(4, 22);
             this.targetCoord.Name = "targetCoord";
             this.targetCoord.Size = new System.Drawing.Size(698, 337);
@@ -783,47 +793,127 @@
             this.targetCoord.Text = "Target Coordinate";
             this.targetCoord.UseVisualStyleBackColor = true;
             // 
+            // targetControls
+            // 
+            this.targetControls.Controls.Add(this.targetCoordLabel);
+            this.targetControls.Controls.Add(this.targetOffButton);
+            this.targetControls.Controls.Add(this.resetTarget);
+            this.targetControls.Controls.Add(this.trackBarXTarget);
+            this.targetControls.Controls.Add(this.label6);
+            this.targetControls.Controls.Add(this.goButton);
+            this.targetControls.Controls.Add(this.label5);
+            this.targetControls.Controls.Add(this.resetOdoButton);
+            this.targetControls.Controls.Add(this.trackBarYTarget);
+            this.targetControls.Controls.Add(this.groupBox4);
+            this.targetControls.Location = new System.Drawing.Point(42, 3);
+            this.targetControls.Name = "targetControls";
+            this.targetControls.Size = new System.Drawing.Size(642, 318);
+            this.targetControls.TabIndex = 15;
+            // 
+            // targetCoordLabel
+            // 
+            this.targetCoordLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.targetCoordLabel.Location = new System.Drawing.Point(240, 63);
+            this.targetCoordLabel.Name = "targetCoordLabel";
+            this.targetCoordLabel.Size = new System.Drawing.Size(135, 30);
+            this.targetCoordLabel.TabIndex = 103;
+            this.targetCoordLabel.Text = "(0,0)";
+            this.targetCoordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // targetOffButton
+            // 
+            this.targetOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.targetOffButton.Location = new System.Drawing.Point(239, 140);
+            this.targetOffButton.Name = "targetOffButton";
+            this.targetOffButton.Size = new System.Drawing.Size(136, 73);
+            this.targetOffButton.TabIndex = 102;
+            this.targetOffButton.Text = "OFF";
+            this.targetOffButton.UseVisualStyleBackColor = true;
+            this.targetOffButton.Click += new System.EventHandler(this.targetOff_Click);
+            // 
             // resetTarget
             // 
             this.resetTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetTarget.Location = new System.Drawing.Point(285, 275);
+            this.resetTarget.Location = new System.Drawing.Point(239, 253);
             this.resetTarget.Name = "resetTarget";
             this.resetTarget.Size = new System.Drawing.Size(136, 28);
             this.resetTarget.TabIndex = 101;
             this.resetTarget.Text = "Reset Target";
             this.resetTarget.UseVisualStyleBackColor = true;
+            this.resetTarget.Click += new System.EventHandler(this.resetTarget_Click);
+            // 
+            // trackBarXTarget
+            // 
+            this.trackBarXTarget.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarXTarget.Location = new System.Drawing.Point(86, 3);
+            this.trackBarXTarget.Maximum = 200;
+            this.trackBarXTarget.Minimum = -200;
+            this.trackBarXTarget.Name = "trackBarXTarget";
+            this.trackBarXTarget.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarXTarget.Size = new System.Drawing.Size(45, 328);
+            this.trackBarXTarget.TabIndex = 95;
+            this.trackBarXTarget.TickFrequency = 25;
+            this.trackBarXTarget.ValueChanged += new System.EventHandler(this.targetCoords_Changed);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(48, 161);
+            this.label6.Location = new System.Drawing.Point(2, 161);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 13);
             this.label6.TabIndex = 100;
-            this.label6.Text = "Target Y Value";
+            this.label6.Text = "Target X Value";
+            // 
+            // goButton
+            // 
+            this.goButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goButton.Location = new System.Drawing.Point(239, 99);
+            this.goButton.Name = "goButton";
+            this.goButton.Size = new System.Drawing.Size(136, 35);
+            this.goButton.TabIndex = 96;
+            this.goButton.Text = "Go";
+            this.goButton.UseVisualStyleBackColor = true;
+            this.goButton.Click += new System.EventHandler(this.goButton_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(545, 8);
+            this.label5.Location = new System.Drawing.Point(499, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 13);
             this.label5.TabIndex = 99;
-            this.label5.Text = "Target X Value";
+            this.label5.Text = "Target Y Value";
             // 
-            // trackBar1
+            // resetOdoButton
             // 
-            this.trackBar1.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBar1.Location = new System.Drawing.Point(168, 3);
-            this.trackBar1.Maximum = 200;
-            this.trackBar1.Minimum = -200;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(378, 45);
-            this.trackBar1.TabIndex = 94;
-            this.trackBar1.TickFrequency = 25;
+            this.resetOdoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetOdoButton.Location = new System.Drawing.Point(239, 219);
+            this.resetOdoButton.Name = "resetOdoButton";
+            this.resetOdoButton.Size = new System.Drawing.Size(136, 28);
+            this.resetOdoButton.TabIndex = 97;
+            this.resetOdoButton.Text = "Reset Odometry";
+            this.resetOdoButton.UseVisualStyleBackColor = true;
+            this.resetOdoButton.Click += new System.EventHandler(this.resetOdoButton_Click);
+            // 
+            // trackBarYTarget
+            // 
+            this.trackBarYTarget.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarYTarget.Location = new System.Drawing.Point(122, 3);
+            this.trackBarYTarget.Maximum = 200;
+            this.trackBarYTarget.Minimum = -200;
+            this.trackBarYTarget.Name = "trackBarYTarget";
+            this.trackBarYTarget.Size = new System.Drawing.Size(378, 45);
+            this.trackBarYTarget.TabIndex = 94;
+            this.trackBarYTarget.TickFrequency = 25;
+            this.trackBarYTarget.ValueChanged += new System.EventHandler(this.targetCoords_Changed);
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.targVelRLabel);
+            this.groupBox4.Controls.Add(this.targVelLLabel);
+            this.groupBox4.Controls.Add(this.measuredHeading);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.measuredY);
             this.groupBox4.Controls.Add(this.targetY);
             this.groupBox4.Controls.Add(this.targetX);
@@ -832,12 +922,60 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Location = new System.Drawing.Point(285, 89);
+            this.groupBox4.Location = new System.Drawing.Point(452, 208);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(136, 75);
+            this.groupBox4.Size = new System.Drawing.Size(173, 94);
             this.groupBox4.TabIndex = 98;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Coordinates";
+            this.groupBox4.Text = "Data Received";
+            // 
+            // targVelRLabel
+            // 
+            this.targVelRLabel.Location = new System.Drawing.Point(134, 55);
+            this.targVelRLabel.Name = "targVelRLabel";
+            this.targVelRLabel.Size = new System.Drawing.Size(32, 13);
+            this.targVelRLabel.TabIndex = 13;
+            this.targVelRLabel.Text = "0";
+            this.targVelRLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // targVelLLabel
+            // 
+            this.targVelLLabel.Location = new System.Drawing.Point(134, 36);
+            this.targVelLLabel.Name = "targVelLLabel";
+            this.targVelLLabel.Size = new System.Drawing.Size(32, 13);
+            this.targVelLLabel.TabIndex = 12;
+            this.targVelLLabel.Text = "0";
+            this.targVelLLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // measuredHeading
+            // 
+            this.measuredHeading.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.measuredHeading.Location = new System.Drawing.Point(38, 75);
+            this.measuredHeading.Name = "measuredHeading";
+            this.measuredHeading.Size = new System.Drawing.Size(32, 13);
+            this.measuredHeading.TabIndex = 11;
+            this.measuredHeading.Text = "0";
+            this.measuredHeading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(13, 74);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "h";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(134, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Drive";
             // 
             // measuredY
             // 
@@ -902,7 +1040,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(13, 55);
+            this.label11.Location = new System.Drawing.Point(13, 54);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(12, 13);
             this.label11.TabIndex = 1;
@@ -912,43 +1050,11 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(13, 36);
+            this.label12.Location = new System.Drawing.Point(13, 35);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(12, 13);
             this.label12.TabIndex = 0;
             this.label12.Text = "x";
-            // 
-            // resetEncButton
-            // 
-            this.resetEncButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetEncButton.Location = new System.Drawing.Point(285, 241);
-            this.resetEncButton.Name = "resetEncButton";
-            this.resetEncButton.Size = new System.Drawing.Size(136, 28);
-            this.resetEncButton.TabIndex = 97;
-            this.resetEncButton.Text = "Reset Odometry";
-            this.resetEncButton.UseVisualStyleBackColor = true;
-            // 
-            // goButton
-            // 
-            this.goButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.goButton.Location = new System.Drawing.Point(285, 170);
-            this.goButton.Name = "goButton";
-            this.goButton.Size = new System.Drawing.Size(66, 65);
-            this.goButton.TabIndex = 96;
-            this.goButton.Text = "Go";
-            this.goButton.UseVisualStyleBackColor = true;
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBar2.Location = new System.Drawing.Point(132, 3);
-            this.trackBar2.Maximum = 200;
-            this.trackBar2.Minimum = -200;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar2.Size = new System.Drawing.Size(45, 328);
-            this.trackBar2.TabIndex = 95;
-            this.trackBar2.TickFrequency = 25;
             // 
             // targetCoordPage
             // 
@@ -1533,26 +1639,6 @@
             this.offResetButton.Text = "OFF + Reset";
             this.offResetButton.UseVisualStyleBackColor = true;
             // 
-            // button52
-            // 
-            this.button52.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button52.Location = new System.Drawing.Point(355, 170);
-            this.button52.Name = "button52";
-            this.button52.Size = new System.Drawing.Size(66, 65);
-            this.button52.TabIndex = 102;
-            this.button52.Text = "OFF";
-            this.button52.UseVisualStyleBackColor = true;
-            // 
-            // clearGraph
-            // 
-            this.clearGraph.Location = new System.Drawing.Point(2, 167);
-            this.clearGraph.Name = "clearGraph";
-            this.clearGraph.Size = new System.Drawing.Size(43, 23);
-            this.clearGraph.TabIndex = 5;
-            this.clearGraph.Text = "CLR";
-            this.clearGraph.UseVisualStyleBackColor = true;
-            this.clearGraph.Click += new System.EventHandler(this.clearGraph_Click);
-            // 
             // form1BindingSource
             // 
             this.form1BindingSource.DataSource = typeof(SerialPlotter.Form1);
@@ -1561,7 +1647,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 497);
+            this.ClientSize = new System.Drawing.Size(726, 490);
             this.Controls.Add(this.offButtonGlobal);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.serialDataBox);
@@ -1584,8 +1670,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.driveControls.ResumeLayout(false);
+            this.driveControls.PerformLayout();
             this.rightDirRadioPanel.ResumeLayout(false);
             this.rightDirRadioPanel.PerformLayout();
             this.leftDirRadioPanel.ResumeLayout(false);
@@ -1595,11 +1681,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLeft)).EndInit();
             this.targetCoord.ResumeLayout(false);
-            this.targetCoord.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.targetControls.ResumeLayout(false);
+            this.targetControls.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarXTarget)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarYTarget)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.targetCoordPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -1649,7 +1736,7 @@
         private System.Windows.Forms.RadioButton revRight;
         private System.Windows.Forms.Panel leftDirRadioPanel;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox driveControls;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label4;
@@ -1723,16 +1810,23 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button resetEncButton;
+        private System.Windows.Forms.Button resetOdoButton;
         private System.Windows.Forms.Button goButton;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBarXTarget;
+        private System.Windows.Forms.TrackBar trackBarYTarget;
         private System.Windows.Forms.Button resetTarget;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.Button button52;
+        private System.Windows.Forms.Button targetOffButton;
         private System.Windows.Forms.Button clearGraph;
+        private System.Windows.Forms.Label targVelRLabel;
+        private System.Windows.Forms.Label targVelLLabel;
+        private System.Windows.Forms.Label measuredHeading;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel targetControls;
+        private System.Windows.Forms.Label targetCoordLabel;
     }
 }
 

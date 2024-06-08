@@ -24,8 +24,9 @@ namespace SerialPlotter
 
     public partial class Form1 : Form
     {
-        private static readonly Regex dataPattern = new Regex(@"^<(\d+\.?\d*,\d+\.?\d*,\d+\.?\d*,\d+\.?\d*)>$");
 
+        private static readonly Regex dataPatternPID = new Regex(@"^<(\d+\.?\d*,\d+\.?\d*,\d+\.?\d*,\d+\.?\d*)>$");
+        private static readonly Regex dataPatternTarg = new Regex(@"^<(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)>$");
         private int xVal;
         private int yVal;
         private int leftDir = 1;
@@ -42,14 +43,28 @@ namespace SerialPlotter
         private int latestCurrRVel = 0;
         private int latestTargLVel = 0;
         private int latestTargRVel = 0;
-        public static int maxSeriesLength = 100;
+        public static int maxSeriesLength = 250;
+
+        private Vec currPos = new Vec();
+        private float currHead = 0;
+        private Vec targPos = new Vec();
+        private Vec targSpeed = new Vec();
+
+        private bool robotMode = false; //false = pid, true = targeting
+
+        private int xTarget = 0;
+        private int yTarget = 0;
+
 
 
         private void parseAndAppend(string data)
         {
             // Use Regex to check the format
-            if (dataPattern.IsMatch(data))
+            if (dataPatternPID.IsMatch(data))
             {
+                robotMode = false;
+                driveControls.Enabled = true;
+                targetControls.Enabled = false;
                 // Remove the start and end markers
                 data = data.Substring(1, data.Length - 2);
 
@@ -68,7 +83,7 @@ namespace SerialPlotter
                 latestCurrRVel = Convert.ToInt32(double.Parse(values[1]));
                 latestTargLVel = Convert.ToInt32(double.Parse(values[2]));
                 latestTargRVel = Convert.ToInt32(double.Parse(values[3]));
-
+                
                 // Check if the lists are full and remove the first element if needed
                 if (currLVel.Count >= maxSeriesLength)
                 {
@@ -93,6 +108,28 @@ namespace SerialPlotter
                 targLVel.Add(latestTargLVel);
                 targRVel.Add(latestTargRVel);
             }
+            else if  (dataPatternTarg.IsMatch(data)) 
+            {
+                robotMode = true;
+                driveControls.Enabled = false;
+                targetControls.Enabled = true;
+                Match match = dataPatternTarg.Match(data);
+                currPos.x = float.Parse(match.Groups[1].Value);
+                currPos.y = float.Parse(match.Groups[2].Value);
+                currHead = float.Parse(match.Groups[3].Value);
+                targPos.x = float.Parse(match.Groups[4].Value);
+                targPos.y = float.Parse(match.Groups[5].Value);
+                targSpeed.x = float.Parse(match.Groups[6].Value);
+                targSpeed.y = float.Parse(match.Groups[7].Value);
+
+                measuredX.Text = currPos.x.ToString();
+                measuredY.Text = currPos.y.ToString();
+                measuredHeading.Text = currHead.ToString();
+                targetX.Text = targPos.x.ToString();
+                targetY.Text = targPos.y.ToString();
+                targVelLLabel.Text = targSpeed.x.ToString();
+                targVelRLabel.Text = targSpeed.y.ToString();
+            }
             else
             {
                 // Handle invalid data (e.g., log an error or display a message)
@@ -110,10 +147,33 @@ namespace SerialPlotter
 
         private void updateChart()
         {
+            /*for (int i = 0; i < currLVel.Count; i++)
+            {
+                chart1.Series["Measured Left"].Points.AddXY(i, currLVel[i]); // Measured Left
+                chart1.Series["Measured Right"].Points.AddXY(i, currRVel[i]); // Measured Right
+                chart1.Series["Target Left"].Points.AddXY(i, targLVel[i]); // Target Left
+                chart1.Series["Target Right"].Points.AddXY(i, targRVel[i]); // Target Right
+            }*/
+
+            //chart1.Invalidate();
+            // Refresh the chart
             chart1.Series["Measured Left"].Points.AddY(latestCurrLVel);
             chart1.Series["Measured Right"].Points.AddY(latestCurrRVel);
             chart1.Series["Target Left"].Points.AddY(latestTargLVel);
             chart1.Series["Target Right"].Points.AddY(latestTargRVel);
+
+            if (chart1.Series["Measured Left"].Points.Count() > maxSeriesLength)
+            {
+                clearGraphPoints();
+            }
+        }
+
+        private void clearGraphPoints()
+        {
+            chart1.Series["Measured Left"].Points.Clear();
+            chart1.Series["Measured Right"].Points.Clear();
+            chart1.Series["Target Left"].Points.Clear();
+            chart1.Series["Target Right"].Points.Clear();
         }
 
         public Form1()
@@ -170,6 +230,7 @@ namespace SerialPlotter
         {
             if (serialPort1.IsOpen)
             {
+                serialPort1.DiscardInBuffer();
                 serialPort1.Close();
                 serialBeginButton.Enabled = true;
                 serialCloseButton.Enabled = false;
@@ -177,30 +238,75 @@ namespace SerialPlotter
                 tabControl1.Enabled = false;
                 offButtonGlobal.Enabled = false;
                 writeStatusLabel.Text = "Open a serial port to write data";
+                serialPort1.Dispose();
             }
         }
-
+        /*
         private void serialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-
             // Read data asynchronously
             Task.Run(() =>
             {
                 string indata = serialPort1.ReadExisting();
                 //Console.WriteLine(indata);
+                serialPort1.DiscardInBuffer();
 
                 // Update the TextBox on the UI thread (using Invoke)
                 this.Invoke(new MethodInvoker(delegate ()
                 {
                     serialDataBox.Text = indata;
                     readData = indata;
-                    parseAndAppend(readData);
+                    Console.WriteLine(readData);
                     updateVels();
                     updateChart();
                 }));
 
             });
+        }
+        */
+        private void serialDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            // Read data asynchronously
+            Task.Run(() =>
+            {
+                // Read data until the end delimiter is found
+                string indata = "";
+                while (serialPort1.BytesToRead > 0)
+                {
+                    indata += (char)serialPort1.ReadByte();
+                    if (indata.EndsWith(">"))
+                    {
+                        break;
+                    }
+                }
 
+                // Log the raw data
+                Console.WriteLine("Received Data: " + indata);
+
+                // Update the TextBox on the UI thread (using Invoke)
+                this.Invoke(new MethodInvoker(delegate ()
+                {
+                    serialDataBox.Text = indata;
+                    readData = indata;
+
+                    // Parse and append data
+                    parseAndAppend(readData);
+
+                    // Update the chart
+                    if (chart1.InvokeRequired)
+                    {
+                        chart1.BeginInvoke(new MethodInvoker(updateChart));
+                    }
+                    else
+                    {
+                        updateChart();
+                        updateVels();
+                    }
+
+                    // Clear the buffer after processing data
+                    serialPort1.DiscardInBuffer();
+                }));
+            });
         }
 
         private void sendWriteButton_Click(object sender, EventArgs e)
@@ -414,10 +520,38 @@ namespace SerialPlotter
 
         private void clearGraph_Click(object sender, EventArgs e)
         {
-            chart1.Series["Measured Left"].Points.Clear();
-            chart1.Series["Measured Right"].Points.Clear();
-            chart1.Series["Target Left"].Points.Clear();
-            chart1.Series["Target Right"].Points.Clear();
+            clearGraphPoints();
+        }
+
+
+        private void targetCoords_Changed(object sender, EventArgs e)
+        {
+            xTarget = trackBarXTarget.Value;
+            yTarget = -trackBarYTarget.Value;
+            targetCoordLabel.Text = "(" + xTarget + ", " + yTarget + ")";
+        }
+
+        private void goButton_Click(object sender, EventArgs e)
+        {
+            sendDrive(xTarget, yTarget, 0, 0);
+        }
+
+        private void resetOdoButton_Click(object sender, EventArgs e)
+        {
+            sendDrive(xTarget, yTarget, 1, 1);
+        }
+
+        private void targetOff_Click(object sender, EventArgs e)
+        {
+            sendDrive(xTarget, yTarget, 1, 0);
+        }
+
+        private void resetTarget_Click(object sender, EventArgs e)
+        {
+            xTarget = 0;
+            yTarget = 0;
+            trackBarYTarget.Value = 0;
+            trackBarXTarget.Value = 0;
         }
     }
 }
