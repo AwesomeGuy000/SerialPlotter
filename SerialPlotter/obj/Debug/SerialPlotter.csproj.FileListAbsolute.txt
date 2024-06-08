@@ -1,9 +1,9 @@
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.csproj.AssemblyReference.cache
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.csproj.SuggestedBindingRedirects.cache
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.Form1.resources
-D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.Properties.Resources.resources
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.csproj.GenerateResource.cache
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.csproj.CoreCompileInputs.cache
+D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\obj\Debug\SerialPlotter.Properties.Resources.resources
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\bin\Debug\SerialPlotter.exe.config
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\bin\Debug\SerialPlotter.exe
 D:\Users\Ermia Firouzabadi\source\repos\SerialPlotter\SerialPlotter\bin\Debug\SerialPlotter.pdb

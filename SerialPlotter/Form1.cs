@@ -24,7 +24,7 @@ namespace SerialPlotter
 
     public partial class Form1 : Form
     {
-
+        
         private static readonly Regex dataPatternPID = new Regex(@"^<(\d+\.?\d*,\d+\.?\d*,\d+\.?\d*,\d+\.?\d*)>$");
         private static readonly Regex dataPatternTarg = new Regex(@"^<(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)>$");
         private int xVal;
@@ -134,6 +134,8 @@ namespace SerialPlotter
             {
                 // Handle invalid data (e.g., log an error or display a message)
                 Console.WriteLine("Invalid data format.");
+                //driveControls.Enabled = false;
+                //targetControls.Enabled = false;
             }
         }
 
