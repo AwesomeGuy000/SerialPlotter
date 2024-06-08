@@ -7,6 +7,8 @@ This project was made to test the controller for the 2024 QUT DRC. It can read d
 * Reads data from a specified serial port.
 * Displays received data in a text box.
 * Handles potential errors, such as unauthorized access or port closure.
+  
+<img src="https://github.com/AwesomeGuy000/SerialPlotter/assets/64011811/9ee5ab90-8e69-4dee-9625-b9d44a5b8d05" width=45%> <img src="https://github.com/AwesomeGuy000/SerialPlotter/assets/64011811/aa75989e-f194-490e-93df-17d66a025ef9" width=44.7%>
 
 ## Installation
 
