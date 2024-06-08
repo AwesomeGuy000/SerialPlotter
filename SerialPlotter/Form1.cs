@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Windows.Forms.DataVisualization.Charting;
-
+using System.Text.RegularExpressions;
 
 public struct Vec
 {
@@ -24,7 +24,7 @@ namespace SerialPlotter
 
     public partial class Form1 : Form
     {
-
+        private static readonly Regex dataPattern = new Regex(@"^<(\d+\.?\d*,\d+\.?\d*,\d+\.?\d*,\d+\.?\d*)>$");
 
         private int xVal;
         private int yVal;
@@ -33,7 +33,7 @@ namespace SerialPlotter
         private int leftEn = 1;
         private int rightEn = 1;
 
-        public string readData;
+        public string readData = "";
         public List<int> currLVel;
         public List<int> currRVel;
         public List<int> targLVel;
@@ -48,7 +48,7 @@ namespace SerialPlotter
         private void parseAndAppend(string data)
         {
             // Use Regex to check the format
-            if (System.Text.RegularExpressions.Regex.IsMatch(data, @"^<(\d+\.?\d*,\d+\.?\d*,\d+\.?\d*,\d+\.?\d*)>$"))
+            if (dataPattern.IsMatch(data))
             {
                 // Remove the start and end markers
                 data = data.Substring(1, data.Length - 2);
@@ -106,6 +106,14 @@ namespace SerialPlotter
             rightMeasured.Text = latestCurrRVel.ToString();
             leftTarget.Text = latestTargLVel.ToString();
             rightTarget.Text = latestTargRVel.ToString();
+        }
+
+        private void updateChart()
+        {
+            chart1.Series["Measured Left"].Points.AddY(latestCurrLVel);
+            chart1.Series["Measured Right"].Points.AddY(latestCurrRVel);
+            chart1.Series["Target Left"].Points.AddY(latestTargLVel);
+            chart1.Series["Target Right"].Points.AddY(latestTargRVel);
         }
 
         public Form1()
@@ -174,6 +182,7 @@ namespace SerialPlotter
 
         private void serialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+
             // Read data asynchronously
             Task.Run(() =>
             {
@@ -187,9 +196,11 @@ namespace SerialPlotter
                     readData = indata;
                     parseAndAppend(readData);
                     updateVels();
+                    updateChart();
                 }));
 
             });
+
         }
 
         private void sendWriteButton_Click(object sender, EventArgs e)
@@ -376,6 +387,8 @@ namespace SerialPlotter
             xVal = 0;
             yVal = 0;
             sendDrive(0,0,1,0);
+            sendDrive(0,0,1,0);
+            sendDrive(0,0,1,0);
             updateSliders();
         }
 
@@ -397,6 +410,14 @@ namespace SerialPlotter
             xVal = leftDir * leftEn * trackBarLeft.Value;
             updateSliders();
             sendDrive(xVal, yVal, 0, 0);
+        }
+
+        private void clearGraph_Click(object sender, EventArgs e)
+        {
+            chart1.Series["Measured Left"].Points.Clear();
+            chart1.Series["Measured Right"].Points.Clear();
+            chart1.Series["Target Left"].Points.Clear();
+            chart1.Series["Target Right"].Points.Clear();
         }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "0f000f64-999c-44d6-9e4b-430814b730d5": {
+      "ProjectGuid": "0f000f64-999c-44d6-9e4b-430814b730d5",
+      "DisplayName": "SerialPlotter",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
