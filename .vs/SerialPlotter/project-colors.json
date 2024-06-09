@@ -5,6 +5,11 @@
       "ProjectGuid": "0f000f64-999c-44d6-9e4b-430814b730d5",
       "DisplayName": "SerialPlotter",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

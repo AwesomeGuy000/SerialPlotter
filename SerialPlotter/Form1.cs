@@ -214,6 +214,8 @@ namespace SerialPlotter
                     serialPort1.BaudRate = Convert.ToInt32(comboBoxBaud.Text);
                     serialPort1.Open();
                     serialBeginButton.Enabled = false;
+                    comboBoxBaud.Enabled = false;
+                    comboBoxPort.Enabled = false;
                     serialCloseButton.Enabled = true;
                     sendWriteButton.Enabled = true;
                     tabControl1.Enabled = true;
@@ -235,6 +237,8 @@ namespace SerialPlotter
                 serialPort1.DiscardInBuffer();
                 serialPort1.Close();
                 serialBeginButton.Enabled = true;
+                comboBoxBaud.Enabled = true;
+                comboBoxPort.Enabled = true;
                 serialCloseButton.Enabled = false;
                 sendWriteButton.Enabled = false;
                 tabControl1.Enabled = false;
