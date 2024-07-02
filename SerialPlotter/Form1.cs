@@ -64,7 +64,7 @@ namespace SerialPlotter
             {
                 robotMode = false;
                 driveControls.Enabled = true;
-                targetControls.Enabled = false;
+                targetControls.Enabled = true;
                 // Remove the start and end markers
                 data = data.Substring(1, data.Length - 2);
 
@@ -111,7 +111,7 @@ namespace SerialPlotter
             else if  (dataPatternTarg.IsMatch(data)) 
             {
                 robotMode = true;
-                driveControls.Enabled = false;
+                driveControls.Enabled = true;
                 targetControls.Enabled = true;
                 Match match = dataPatternTarg.Match(data);
                 currPos.x = float.Parse(match.Groups[1].Value);
@@ -559,5 +559,7 @@ namespace SerialPlotter
             trackBarYTarget.Value = 0;
             trackBarXTarget.Value = 0;
         }
+
+
     }
 }

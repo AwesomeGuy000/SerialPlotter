@@ -419,7 +419,7 @@
             chartArea1.AxisX.Maximum = 250D;
             chartArea1.AxisX.ScaleBreakStyle.CollapsibleSpaceThreshold = 90;
             chartArea1.AxisX.ScaleBreakStyle.Enabled = true;
-            chartArea1.AxisY.Maximum = 400D;
+            chartArea1.AxisY.Maximum = 800D;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
@@ -676,7 +676,7 @@
             // 
             this.trackBarRight.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarRight.Location = new System.Drawing.Point(411, 71);
-            this.trackBarRight.Maximum = 600;
+            this.trackBarRight.Maximum = 800;
             this.trackBarRight.Name = "trackBarRight";
             this.trackBarRight.Size = new System.Drawing.Size(165, 45);
             this.trackBarRight.TabIndex = 27;
@@ -698,7 +698,7 @@
             // 
             this.trackBarLeft.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarLeft.Location = new System.Drawing.Point(240, 71);
-            this.trackBarLeft.Maximum = 600;
+            this.trackBarLeft.Maximum = 800;
             this.trackBarLeft.Name = "trackBarLeft";
             this.trackBarLeft.Size = new System.Drawing.Size(165, 45);
             this.trackBarLeft.TabIndex = 26;
